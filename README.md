@@ -13,8 +13,10 @@ Caused by: java.lang.StringIndexOutOfBoundsException: begin 0, end 3, length 1
 	... 15 more	
 ```
 
-to fix this, you can use this projects jar file run your application with the vm-option
-' -javaagent:/path/to/jdk9-liquibase-agent.jar'
+to fix this, you can use this projects jar file.
+ 
+Run your application with the vm-option
+'-javaagent:/path/to/jdk9-liquibase-agent.jar'
 
 Please note that you will also need ByteBuddy on your classpath:
 https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy

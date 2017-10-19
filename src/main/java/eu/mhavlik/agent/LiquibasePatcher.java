@@ -1,4 +1,4 @@
-package eu.scoopgmbh.agent;
+package eu.mhavlik.agent;
 
 import java.lang.instrument.Instrumentation;
 
