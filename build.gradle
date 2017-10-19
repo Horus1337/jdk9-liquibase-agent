@@ -1,0 +1,36 @@
+apply plugin: 'java'
+
+repositories {
+    jcenter()
+}
+
+ext.moduleName = 'eu.mhavlik.jdk9liquibaseagent'
+
+compileJava {
+    inputs.property("moduleName", moduleName)
+    doFirst {
+        options.compilerArgs = ['--module-path', classpath.asPath]
+        classpath = files()
+    }
+}
+
+jar.doFirst {
+    manifest {
+        def manifestCp = configurations.runtime.files.collect {
+            "${it.name}"
+        }.join(' ')
+        attributes(
+                "Created-By": "Michael Havlik",
+                "Premain-Class": "eu.scoopgmbh.agent.LiquibasePatcher",
+                "Class-Path": manifestCp,
+                "Boot-Class-Path": manifestCp,
+                "Can-Redefine-Classes": "true",
+                "Can-Retransform-Classes": "true",
+                "Implementation-Version": "1.0"
+        )
+    }
+}
+
+dependencies {
+    compile group: 'net.bytebuddy', name: 'byte-buddy', version: '1.7.6'
+}
