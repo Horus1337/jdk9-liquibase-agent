@@ -1,13 +1,18 @@
+import org.gradle.api.tasks.wrapper.Wrapper.DistributionType
+
 apply plugin: 'java'
+
+wrapper {
+    gradleVersion = '4.1'
+    distributionType = DistributionType.ALL
+}
 
 repositories {
     jcenter()
 }
 
-ext.moduleName = 'eu.mhavlik.agent.jdk9liquibase'
-
 compileJava {
-    inputs.property("moduleName", moduleName)
+    inputs.property("moduleName", 'eu.mhavlik.agent.jdk9liquibase')
     doFirst {
         options.compilerArgs = ['--module-path', classpath.asPath]
         classpath = files()
