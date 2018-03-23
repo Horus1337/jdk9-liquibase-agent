@@ -1,40 +1,42 @@
-import org.gradle.api.tasks.wrapper.Wrapper.DistributionType
-
-apply plugin: 'java'
-
 wrapper {
-    gradleVersion = '4.1'
-    distributionType = DistributionType.ALL
+    gradleVersion = '4.6'
+    distributionType = org.gradle.api.tasks.wrapper.Wrapper.DistributionType.ALL
 }
 
-repositories {
-    jcenter()
-}
 
-compileJava {
-    inputs.property("moduleName", 'eu.mhavlik.agent.jdk9liquibase')
-    doFirst {
-        options.compilerArgs = ['--module-path', classpath.asPath]
-        classpath = files()
+allprojects {
+
+    repositories {
+        jcenter()
     }
-}
 
-jar.doFirst {
-    manifest {
-        def manifestCp = configurations.runtime.files.collect {
-            "${it.name}"
-        }.join(' ')
-        attributes(
-                "Created-By": "Michael Havlik",
-                "Premain-Class": "eu.mhavlik.agent.LiquibasePatcher",
-                "Boot-Module-Path": manifestCp,
-                "Can-Redefine-Classes": "true",
-                "Can-Retransform-Classes": "true",
-                "Implementation-Version": "1.0"
-        )
+    apply plugin: 'java'
+
+    compileJava {
+        inputs.property("moduleName", 'eu.mhavlik.agent.jdk9liquibase')
+        doFirst {
+            options.compilerArgs = ['--module-path', classpath.asPath]
+            classpath = files()
+        }
     }
-}
 
-dependencies {
-    compile group: 'net.bytebuddy', name: 'byte-buddy', version: '1.7.6'
+    jar.doFirst {
+        manifest {
+            def manifestCp = configurations.runtime.files.collect {
+                "${it.name}"
+            }.join(' ')
+            attributes(
+                    "Created-By": "Michael Havlik",
+                    "Premain-Class": "eu.mhavlik.agent.LiquibasePatcher",
+                    "Boot-Module-Path": manifestCp,
+                    "Can-Redefine-Classes": "true",
+                    "Can-Retransform-Classes": "true",
+                    "Implementation-Version": "1.0"
+            )
+        }
+    }
+
+    dependencies {
+        compile group: 'net.bytebuddy', name: 'byte-buddy', version: '1.7.6'
+    }
 }

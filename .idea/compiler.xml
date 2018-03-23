@@ -2,6 +2,10 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
+      <module name="jdk-10-fix_main" target="1.9" />
+      <module name="jdk-10-fix_test" target="1.9" />
+      <module name="jdk-9-fix_main" target="1.9" />
+      <module name="jdk-9-fix_test" target="1.9" />
       <module name="jdk9-liquibase-agent_main" target="1.9" />
       <module name="jdk9-liquibase-agent_test" target="1.9" />
     </bytecodeTargetLevel>
